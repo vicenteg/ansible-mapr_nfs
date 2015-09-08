@@ -17,6 +17,8 @@
   failed_when: warden_status.rc not in (0,1)
 
 - name: check whether NFS is running
+  sudo: yes
+  sudo_user: root
   command: showmount -e localhost
   register: nfs_running
   failed_when: nfs_running.rc not in (0,1)
