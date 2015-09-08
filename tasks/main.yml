@@ -33,5 +33,5 @@
 - name: add a warden-managed local NFS mount
   sudo: yes
   sudo_user: '{{mapr_admin_username}}'
-  template: src=mapr_fstab.j2 dest=/opt/mapr/conf/mapr_fstab mode=0644 owner=root group=root
+  template: src=mapr_fstab.j2 dest=/opt/mapr/conf/mapr_fstab mode=0644
 
