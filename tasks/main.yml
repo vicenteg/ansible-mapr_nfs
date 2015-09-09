@@ -22,6 +22,7 @@
   command: showmount -e localhost
   register: nfs_running
   failed_when: nfs_running.rc not in (0,1)
+  changed_when: false
 
 - name: create mountpoint for loopback NFS mountpoint
   sudo: yes
