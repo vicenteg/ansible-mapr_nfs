@@ -3,14 +3,12 @@
 
 - name: install mapr-nfs packages
   yum: name={{item}} state=present
-  sudo: yes
   sudo_user: root
   with_items:
     - mapr-nfs
   environment: proxy_env
 
 - name: is warden running?
-  sudo: yes
   sudo_user: root
   command: service mapr-warden status
   register: warden_status
@@ -18,7 +16,6 @@
   changed_when: false
 
 - name: check whether NFS is running
-  sudo: yes
   sudo_user: root
   command: showmount -e localhost
   register: nfs_running
@@ -26,14 +23,12 @@
   changed_when: false
 
 - name: create mountpoint for loopback NFS mountpoint
-  sudo: yes
   sudo_user: root
   file: path=/mapr state=directory
   when: nfs_running.rc == 0 or warden_status.rc != 0
 
 # For each NFS server, add a local mount. Clients (such as edge nodes) will mount via system fstab.
 - name: add a warden-managed local NFS mount
-  sudo: yes
-  sudo_user: '{{mapr_admin_username}}'
+  sudo_user: root
   template: src=mapr_fstab.j2 dest=/opt/mapr/conf/mapr_fstab mode=0644
 
