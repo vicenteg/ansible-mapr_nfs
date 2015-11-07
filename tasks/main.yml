@@ -22,10 +22,14 @@
   failed_when: nfs_running.rc not in (0,1)
   changed_when: false
 
-- name: create mountpoint for loopback NFS mountpoint
+- name: create mountpoints for loopback NFS
   sudo_user: root
-  file: path=/mapr state=directory
+  file: path={{item}} state=directory
   when: nfs_running.rc == 0 or warden_status.rc != 0
+  with_items:
+    - /mapr
+    - /user
+    - /apps
 
 # For each NFS server, add a local mount. Clients (such as edge nodes) will mount via system fstab.
 - name: add a warden-managed local NFS mount
