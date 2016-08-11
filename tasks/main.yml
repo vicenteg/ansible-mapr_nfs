@@ -14,7 +14,7 @@
   become_user: root
   command: service mapr-warden status
   register: warden_status
-  failed_when: warden_status.rc not in (0,1)
+  failed_when: warden_status.rc not in (0,1,2,3)
   changed_when: false
 
 - name: check whether NFS is running
